@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Resturant</title>
+    <script type="importmap"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://kit.fontawesome.com/5a0419d48f.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />  
+     <link rel="stylesheet" href="~/css/css/aos.css"/>
+     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+     <link rel="stylesheet" href="~/css/css/font-awesome.css" /> 
+     <link rel="stylesheet" href="~/css/css/style.css"  />
+
+
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm  bg-secondary bg-gradient  box-shadow">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Resturant</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login_Admin">پنل ادمین</a>
+                        </li>
+                        <partial name="_LoginPartial"/>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div>
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="footer" id="footer">
+        <div class="container">
+            <div class="row">
+                <div class="footer-item" data-aos="fade-up">
+                    <h3>آدرس ما</h3>
+                    <p>مشهد , پدیده شاندیز , <br>خیابان ابریشم - پلاک 15</p>
+                </div>
+                <div class="footer-item" data-aos="fade-up">
+                    <h3>ساعت کار</h3>
+                    <p>شنبه تا جمعه <br> از 10 صبح تا 10 شب</p>
+                </div>
+                <div class="footer-item" data-aos="fade-up">
+                    <h3>راه های ارتباطی</h3>
+                    <p>09351234567</p>
+                    <p>info@gmail.com</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="copyright">
+                    &copy; 2021 - طراحی شده توسط حسین امانی
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/aos.js"></script>
+    <script src="~/js/script.js"></script>
+    
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
