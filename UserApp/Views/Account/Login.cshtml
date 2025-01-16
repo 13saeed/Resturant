@@ -6,10 +6,10 @@
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
 
-<div class="account-container">
-    <div class="account_box">
+<div class="account-container ">
+    <div class="account_box bg-dark text-light">
         <h2 class="text-center mb-4">Login</h2>
-        <form asp-action="login" method="post">
+        <form  asp-action="login" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="mb-3">
                 <label asp-for="Email" class="form-label"></label>

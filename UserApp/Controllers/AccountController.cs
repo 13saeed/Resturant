@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Resturant.Models;
@@ -7,25 +8,29 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Resturant.Controllers
 {
+   
+    
 
     public class AccountController : Controller
     {
         private readonly SignInManager<Users> signInManager;
         private readonly UserManager<Users> userManager;
-        private readonly UserManager<Admins> adminManager;
+        private readonly RoleManager<IdentityRole> roleManager;
 
 
-        public AccountController(SignInManager<Users> signInManager, UserManager<Users> userManager,UserManager<Admins> adminManager)
+        public AccountController(SignInManager<Users> signInManager, UserManager<Users> userManager, RoleManager<IdentityRole> roleManager)
         {
             this.signInManager = signInManager;
             this.userManager = userManager;
-            this.adminManager = adminManager;
+            this.roleManager = roleManager;
         }
 
         public IActionResult Login()
         {
             return View();
         }
+
+       
 
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
@@ -37,7 +42,24 @@ namespace Resturant.Controllers
                     var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
                     if (result.Succeeded)
                     {
-                        return RedirectToAction("Index", "Home");
+                        var user = await userManager.FindByEmailAsync(model.Email);
+                        if (user != null)
+                        {
+                            var roles = await userManager.GetRolesAsync(user);
+                            if (roles.Contains("Admin"))
+                            {
+                                return RedirectToAction("DashboardAdmin", "Home");
+                            }
+                            else
+                            {
+                                return RedirectToAction("Index", "Home");
+                            }
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("", "User not found");
+                            return View(model);
+                        }
                     }
                     else
                     {
@@ -181,31 +203,8 @@ namespace Resturant.Controllers
             }
         }
 
-        public IActionResult Login_Admin()
-        {
-            return View();
-        }
+       
 
-        [HttpPost]
-        public async Task<IActionResult> Login_Admin(AdminLoginViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                if (!string.IsNullOrEmpty(model.Username) && !string.IsNullOrEmpty(model.Password))
-                {
-                   var result = Admins.Equals(model.Username, model.Password);
-                    if (result) {
-                        return RedirectToAction("Index", "Home");
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("", "Username or Password is incorrect");
-                        return View(model);
-                    }
-                }
-            }
-            return View(model);
-        }
 
         public async Task<IActionResult> Logout()
         {
