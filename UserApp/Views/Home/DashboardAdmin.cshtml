@@ -81,8 +81,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/admin/roles">
-                    <span data-feather="layers"></span>
+                <a class="nav-link" href="#">
                     مدیریت منو
                 </a>
             </li>
@@ -95,7 +94,12 @@
 
 <h2 id="ManageUsers" class="text-center text-light pt-4 pe-3">مدیریت کاربران</h2>
 
-<div class="d-flex justify-self-end w-75 ps-5 py-4 ms-5">
+
+<div class=" justify-self-end w-75 ps-5 py-4 ms-5">
+    <div class="d-inline-flex align-items-baseline justify-content-end text-end w-100 ps-4 p-2">
+        <button class="btn btn-primary" onclick="openAddModal()">Add User</button>
+        <h6 class="text-light p-1">Add User</h6>
+    </div>
     <table class="table table-dark table-striped table-hover table-bordered border-black align-text-center ">
         <thead>
             <tr>
@@ -123,8 +127,9 @@
             }
         </tbody>
     </table>
-
 </div>
+
+
 
 <div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserModalLabel" aria-hidden="true">
     <div class="modal-dialog bg-dark" role="document">
@@ -157,6 +162,46 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="addUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog bg-dark" role="document">
+        <div class="modal-content bg-dark">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addUserModalLabel">Add User</h5>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="addFullName">Full Name</label>
+                    <input type="text" class="form-control bg-dark-subtle" id="addFullName">
+                </div>
+                <div class="form-group">
+                    <label for="addUserName">Username</label>
+                    <input type="text" class="form-control bg-dark-subtle" id="addUserName">
+                </div>
+                <div class="form-group">
+                    <label for="addEmail">Email</label>
+                    <input type="email" class="form-control bg-dark-subtle" id="addEmail">
+                </div>
+                <div class="form-group">
+                    <label for="addPassword">Password</label>
+                    <input type="password" class="form-control bg-dark-subtle" id="addPassword">
+                </div>
+                <div class="form-group">
+                    <label for="addRole">Role</label>
+                    <select class="form-control bg-dark-subtle" id="addRole">
+                        <option value="User">User</option>
+                        <option value="Admin">Admin</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeAddModal()">Close</button>
+                <button type="button" class="btn btn-primary" onclick="saveNewUser()">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 @section Scripts{
     <script>
@@ -232,6 +277,45 @@
         }
         function closeModal() {
             $('#editUserModal').modal('hide');
+        }
+        function openAddModal() {
+            $('#addUserModal').modal('show');
+        }
+        function closeAddModal() {
+            $('#addUserModal').modal('hide');
+        }
+        function saveNewUser() {
+            var fullName = document.getElementById('addFullName').value;
+            var userName = document.getElementById('addUserName').value;
+            var email = document.getElementById('addEmail').value;
+            var password = document.getElementById('addPassword').value;
+            var role = document.getElementById('addRole').value;
+            fetch(`/api/users`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    fullName: fullName,
+                    userName: userName,
+                    email: email,
+                    password: password,
+                    role: role
+                })
+            })
+            .then(response => {
+                if (response.ok) {
+                    $('#addUserModal').modal('hide');
+                    location.reload();
+                } else {
+                    console.error('Failed to save user');
+                    alert('Failed to save user.');
+                }
+            })
+            .catch(error => {
+                console.error('Failed to save user', error);
+                alert('Failed to save user.');
+            });
         }
     </script>
 }

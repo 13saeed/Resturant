@@ -43,5 +43,28 @@ namespace Resturant.Controllers
             return NoContent();
         }
 
+        [HttpPost]
+        public async Task<IActionResult> CreateUser([FromBody] CreateUserModel model)
+        {
+            var user = new Users
+            {
+                FullName = model.FullName,
+                UserName = model.UserName,
+                Email = model.Email
+            };
+
+            await _userServices.CreateUserAsync(user, model.Password, model.Role);
+            return Ok();
+        }
+
+        public class CreateUserModel
+        {
+            public string? FullName { get; set; }
+            public string? UserName { get; set; }
+            public string? Email { get; set; }
+            public string? Password { get; set; }
+            public string? Role { get; set; }
+        }
+
     }
 }

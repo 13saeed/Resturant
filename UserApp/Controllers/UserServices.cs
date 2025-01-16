@@ -48,5 +48,18 @@ namespace Resturant.Controllers
                 await _userManager.DeleteAsync(user);
             }
         }
+
+        public async Task CreateUserAsync(Users user, string password, string role)
+        {
+            var result = await _userManager.CreateAsync(user, password);
+            if (result.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(user, role);
+            }
+            else
+            {
+                throw new Exception("Failed to create user");
+            }
+        }
     }
 }
