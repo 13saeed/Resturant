@@ -1,0 +1,35 @@
+﻿@using Resturant.Data
+@using Resturant.Models
+@model IEnumerable<Resturant.Models.Foods>
+
+@{
+    ViewData["Title"] = "منو غذا ";
+}
+<style>
+    body, html {
+        height: 100%;
+        background-color: #393a3b;
+    }
+</style>
+
+<div class="container my-5">
+    <h1 class="text-center mb-4">Restaurant Menu</h1>
+    <div class="row">
+        @foreach (var food in Model)
+        {
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="@food.Image" class="card-img-top" alt="@food.Name">
+                        <div class="card-body ">
+                            <h5 class="card-title">@food.Name</h5>
+                            <p class="card-text">Category:@food.Category</p>
+                            <p class="card-text">@food.Description</p>
+                            <p class="card-text">Price:@food.Price</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using Resturant.Models;
 
@@ -11,6 +13,7 @@ namespace Resturant.Data
             : base(options)
         {
         }
+        public DbSet<Foods> Foods { get; set; }
 
     }
 
