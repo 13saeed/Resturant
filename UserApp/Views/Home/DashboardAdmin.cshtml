@@ -569,5 +569,10 @@
         users = await UserServices.GetAllUsersAsync();
         await JSRuntime.InvokeVoidAsync("location.reload");
     }
-
+    //task food edit
+    public async Task EditFood(string foodId)
+    {
+        selectedUser = await UserServices.GetUserByIdAsync(foodId);
+        await JSRuntime.InvokeVoidAsync("openEditFoodModal", foodId);
+    }
 }
