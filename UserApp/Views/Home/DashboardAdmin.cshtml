@@ -4,20 +4,28 @@
 @using Resturant.Controllers
 @inject UserManager<Users> UserManager;
 @inject UserServices UserServices;
+@inject FoodsServices FoodsServices;
+@inject Foods Foods;
 @inject IJSRuntime JSRuntime;
-@model IEnumerable<Resturant.Models.Foods>
+
 
 @{
     ViewData["Title"] = "پنل مدیریت";
     List<Users> users = new List<Users>();
+    List<Foods> foods = new List<Foods>();
     Users selectedUser = new Users();
-
+    Foods selectedFood = new Foods();
     // Asynchronous initialization
     var task = Task.Run(async () =>
     {
         users = await UserServices.GetAllUsersAsync();
     });
     task.Wait();
+    var task2 = Task.Run(async () =>
+    {
+        foods = await FoodsServices.GetAllFoodsAsync();
+    });
+    task2.Wait();
 }
 
 <style>
@@ -63,34 +71,35 @@
     text-align:center;
     }
     .w-80{
-        width:80%;
+    width:80%;
     }
 
 </style>
 
 
-<nav id="sidebar" class="col-md-3 col-lg-2 d-md-block sidebar bg-dark fs-6">
+<nav id="sidebar" class="col-md-3 col-lg-2 d-md-block sidebar bg-dark fs-6 text-start">
     <div class="position-sticky">
         <ul class="nav flex-column m-2">
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/Home/DashboardAdmin">
-                    <span data-feather="home"></span>
-                    صفحه اصلی
-                </a>
-            </li>
-            <li class="nav-item">
+                
                 <a class="nav-link" href="#ManageUsers" onclick="onClickManageUser()">
+                    <i class="fa-solid fa-user pe-1"></i>
                     <span data-feather="users"></span>
-                    مدیریت کاربران
+                    Manage Users
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#" onclick="onClickManageMenu()">
-                    مدیریت منو
+                    <i class="fa-solid fa-bars pe-1"></i>
+                    Manage Menu Foods
                 </a>
             </li>
+            
+
             <li class="nav-item">
-                <a class="nav-link" asp-controller="Account" asp-action="Logout">خروج</a>
+                <a class="nav-link" asp-controller="Account" asp-action="Logout">
+                    <i class="fa-solid fa-right-from-bracket pe-1"></i>
+                    Logout</a>
             </li>
         </ul>
     </div>
@@ -98,11 +107,11 @@
 
 @* manage users table start  *@
 
-<h2 id="lableManageUser" class="text-center text-light pt-4 pe-3">مدیریت کاربران</h2>
-<div id="manageuser" class=" justify-self-end w-75 ps-5 py-4 ms-5">
-    <div class="d-inline-flex align-items-baseline justify-content-end text-end w-100 ps-4 p-2">
-        <button class="btn btn-primary" onclick="openAddModal()">Add User</button>
+<h2 id="lableManageUser" class="text-center text-light pt-4 pe-3">Manage Users</h2>
+<div id="manageuser" class=" justify-self-end w-75 pe-5 me-5">
+    <div class="d-inline-flex align-items-baseline justify-content-start text-end w-100 ps-4 p-2">
         <h6 class="text-light p-1">Add User</h6>
+        <button class="btn btn-primary" onclick="openAddModal()">Add User</button>
     </div>
     <table class="table table-dark table-striped table-hover table-bordered border-black align-text-center ">
         <thead>
@@ -135,51 +144,51 @@
 @* manage users table end*@
 
 @* manage Menu table start *@
-<h2 id="lableManageMenu" class="text-center text-light pt-4 pe-3 d-none">مدیریت منو</h2>
-<div id="MenuTable" class=" justify-self-end w-80 ps-5 py-4 ms-5 d-none">
-    <div class="d-inline-flex align-items-baseline justify-content-end text-end w-100 ps-4 p-2">
-        <button class="btn btn-primary" onclick="openAddFoodModal()">Add Food</button>
+<h2 id="lableManageMenu" class="text-center text-light pt-4 pe-3 d-none">Manage Menu Foods</h2>
+<div id="MenuTable" class=" justify-self-end w-80  me-5 d-none">
+    <div class="d-inline-flex align-items-baseline justify-content-start  w-100 pe-4 p-2">
         <h6 class="text-light p-1">Add Food</h6>
+        <button class="btn btn-primary" onclick="openAddFoodModal()">Add Food</button>
     </div>
-        <table class="table table-dark table-striped table-hover table-bordered border-black align-text-center ">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Image</th>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Price</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (Model != null)
+    <table class="table table-dark table-striped table-hover table-bordered border-black align-text-center ">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (foods != null)
+            {
+                @foreach (var food in foods)
                 {
-                    @foreach (var food in Model)
-                    {
-                        <tr>
-                            <td>@food.Id</td>
-                            <td>@food.Image</td>
-                            <td>@food.Name</td>
-                            <td>@food.Description</td>
-                            <td>@food.Price</td>
-
-                            <td>
-                                <button class="btn btn-primary" onclick="openEditFoodModal('@food.Id')">Edit</button>
-                                <button class="btn btn-danger" onclick="deleteFood('@food.Id')">Delete</button>
-                            </td>
-                        </tr>
-                    }
-                
-                }
-                else{
                     <tr>
-                        <td colspan="6">No Foods Found</td>
+                        <td>@food.Image</td>
+                        <td>@food.Name</td>
+                        <td>@food.Description</td>
+                        <td>@food.Category</td>
+                        <td>@food.Price</td>
+
+                        <td>
+                            <button class="btn btn-primary" onclick="openEditFoodModal('@food.Id')">Edit</button>
+                            <button class="btn btn-danger" onclick="deleteFood('@food.Id')">Delete</button>
+                        </td>
                     </tr>
                 }
-              
-            </tbody>
-        </table>
+
+            }
+            else{
+                <tr>
+                    <td colspan="6">No Foods Found</td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
 </div>
 @* manage menu end *@
 
@@ -278,7 +287,13 @@
                 </div>
                 <div class="form-group">
                     <label for="addFoodCategory">Category</label>
-                    <input type="text" class="form-control bg-dark-subtle" id="addFoodCategory">
+                    <select class="form-control bg-dark-subtle" id="addFoodCategory">
+                        <option value="Pizza">Pizza</option>
+                        <option value="Sandwich">Sandwich</option>
+                        <option value="Drink">Drink</option>
+                        <option value="Dessert">Dessert</option>
+                        <option value="Burger">Burger</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="addFoodImage">Image URL</label>
@@ -313,18 +328,24 @@
                 <div class="form-group"> 
                     <label for="editFoodName">Name</label>
                     <input type="text" class="form-control bg-dark-subtle" id="editFoodName">
-                    </div>
+                </div>
                 <div class="form-group">
                     <label for="editFoodDescription">Description</label>
                     <input type="text" class="form-control bg-dark-subtle" id="editFoodDescription">
-                    </div>
+                </div>
                 <div class="form-group">
                     <label for="editFoodPrice">Price</label>
                     <input type="number" class="form-control bg-dark-subtle" id="editFoodPrice">
                 </div>
                 <div class="form-group">
                     <label for="editFoodCategory">Category</label>
-                    <input type="text" class="form-control bg-dark-subtle" id="editFoodCategory">
+                    <select class="form-control bg-dark-subtle" id="editFoodCategory">
+                        <option value="Pizza">Pizza</option>
+                        <option value="Sandwich">Sandwich</option>
+                        <option value="Drink">Drink</option>
+                        <option value="Dessert">Dessert</option>
+                        <option value="Burger">Burger</option>
+                    </select>
                 </div>
             </div>
             <div class="modal-footer">
@@ -336,230 +357,295 @@
 </div>
 @* Modal Edit Foods end *@
 
+
+
 @section Scripts{
     <script>
-        //Manage users js
-        //open Edit Modal
-        function openEditModal(userId) {
-            fetch(`/api/users/${userId}`)
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('userid').value = data.id;
-                    document.getElementById('fullName').value = data.fullName;
-                    document.getElementById('userName').value = data.userName;
-                    document.getElementById('email').value = data.email;
-                    $('#editUserModal').modal('show');
-                })
-                .catch(error => {
-                    console.error('Failed to get user', error);
-                    alert('Failed to get user.');
-                });
-        }
-        //Save Users
-        function saveUser() {
-            var userId = document.getElementById('userid').value;
-            var fullName = document.getElementById('fullName').value;
-            var userName = document.getElementById('userName').value;
-            var email = document.getElementById('email').value;
+        
+                //Manage users js
+                //open Edit Modal
+                function openEditModal(userId) {
+                    fetch(`/api/users/${userId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('userid').value = data.id;
+                        document.getElementById('fullName').value = data.fullName;
+                        document.getElementById('userName').value = data.userName;
+                        document.getElementById('email').value = data.email;
+                        $('#editUserModal').modal('show');
+                    })
+                    .catch(error => {
+                        console.error('Failed to get user', error);
+                        alert('Failed to get user.');
+                    });
+                }
 
-            fetch(`/api/users/${userId}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    id: userId,
-                    fullName: fullName,
-                    userName: userName,
-                    email: email
-                })
-            })
-            .then(response => {
-                if (response.ok) {
+                //Save Users
+                function saveUser() {
+                    var userId = document.getElementById('userid').value;
+                    var fullName = document.getElementById('fullName').value;
+                    var userName = document.getElementById('userName').value;
+                    var email = document.getElementById('email').value;
+
+                    fetch(`/api/users/${userId}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            id: userId,
+                            fullName: fullName,
+                            userName: userName,
+                            email: email
+                        })
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            $('#editUserModal').modal('hide');
+                            location.reload();
+                        } else {
+                            console.error('Failed to save user');
+                            alert('Failed to save user.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Failed to save user', error);
+                        alert('Failed to save user.');
+                    });
+                }
+
+                //delete Users
+                function deleteUser(userId) {
+                    fetch(`/api/users/${userId}`, {
+                        method: 'DELETE'
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            location.reload();
+                        } else {
+                            console.error('Failed to delete user');
+                            alert('Failed to delete user.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Failed to delete user', error);
+                        alert('Failed to delete user.');
+                    });
+                }
+
+                function reloadPage() {
+                    location.reload();
+                }
+
+                function closeModal() {
                     $('#editUserModal').modal('hide');
-                    location.reload();
-                } else {
-                    console.error('Failed to save user');
-                    alert('Failed to save user.');
                 }
-            })
-            .catch(error => {
-                console.error('Failed to save user', error);
-                alert('Failed to save user.');
-            });
-        }
-        //delete Users
-        function deleteUser(userId) {
-            fetch(`/api/users/${userId}`, {
-                method: 'DELETE'
-            })
-            .then(response => {
-                if (response.ok) {
-                    location.reload();
-                } else {
-                    console.error('Failed to delete user');
-                    alert('Failed to delete user.');
+
+                function openAddModal() {
+                    $('#addUserModal').modal('show');
                 }
-            })
-            .catch(error => {
-                console.error('Failed to delete user', error);
-                alert('Failed to delete user.');
-            });
-        }
 
-        function reloadPage() {
-            location.reload();
-        }
-        function closeModal() {
-            $('#editUserModal').modal('hide');
-        }
-        function openAddModal() {
-            $('#addUserModal').modal('show');
-        }
-        function closeAddModal() {
-            $('#addUserModal').modal('hide');
-        }
-
-        //Add Users
-        function saveNewUser() {
-            var fullName = document.getElementById('addFullName').value;
-            var userName = document.getElementById('addUserName').value;
-            var email = document.getElementById('addEmail').value;
-            var password = document.getElementById('addPassword').value;
-            var role = document.getElementById('addRole').value;
-            fetch(`/api/users`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    fullName: fullName,
-                    userName: userName,
-                    email: email,
-                    password: password,
-                    role: role
-                })
-            })
-            .then(response => {
-                if (response.ok) {
+                function closeAddModal() {
                     $('#addUserModal').modal('hide');
-                    location.reload();
-                } else {
-                    console.error('Failed to save user');
-                    alert('Failed to save user.');
                 }
-            })
-            .catch(error => {
-                console.error('Failed to save user', error);
-                alert('Failed to save user.');
-            });
-        }
-        function onClickManageUser() {
-            document.getElementById("MenuTable").classList.add("d-none");
-            document.getElementById("manageuser").classList.remove("d-none");
-            document.getElementById("lableManageUser").classList.remove("d-none");
-            document.getElementById("lableManageMenu").classList.add("d-none");
 
-        }
-        function onClickManageMenu() {
-            document.getElementById("MenuTable").classList.remove("d-none");
-            document.getElementById("manageuser").classList.add("d-none");
-            document.getElementById("lableManageUser").classList.add("d-none");
-            document.getElementById("lableManageMenu").classList.remove("d-none");
+                //Add Users
+                function saveNewUser() {
+                    var fullName = document.getElementById('addFullName').value;
+                    var userName = document.getElementById('addUserName').value;
+                    var email = document.getElementById('addEmail').value;
+                    var password = document.getElementById('addPassword').value;
+                    var role = document.getElementById('addRole').value;
 
-        }
-        //Manage menu js
-        //modal Add Foods
-        function openAddFoodModal() {
-            $('#addFoodModal').modal('show');
-        }
-        function closeAddFoodModal() {
-            $('#addFoodModal').modal('hide');
-        }
-        //new foods
-        function saveNewFood() {
-            var name = document.getElementById('addFoodName').value;
-            var description = document.getElementById('addFoodDescription').value;
-            var price = document.getElementById('addFoodPrice').value;
-            var category = document.getElementById('addFoodCategory').value;
-            var image = document.getElementById('addFoodImage').value;
-            fetch(`/api/foods`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    name: name,
-                    description: description,
-                    price: price,
-                    category: category,
-                    image: image
-                })
-            })
-            .then(response => {
-                if (response.ok) {
+                    fetch(`/api/users`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            fullName: fullName,
+                            userName: userName,
+                            email: email,
+                            password: password,
+                            role: role
+                        })
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            $('#addUserModal').modal('hide');
+                            location.reload();
+                        } else {
+                            console.error('Failed to save user');
+                            alert('Failed to save user.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Failed to save user', error);
+                        alert('Failed to save user.');
+                    });
+                }
+
+                function onClickManageUser() {
+                    document.getElementById("MenuTable").classList.add("d-none");
+                    document.getElementById("manageuser").classList.remove("d-none");
+                    document.getElementById("lableManageUser").classList.remove("d-none");
+                    document.getElementById("lableManageMenu").classList.add("d-none");
+                }
+
+                function onClickManageMenu() {
+                    document.getElementById("MenuTable").classList.remove("d-none");
+                    document.getElementById("manageuser").classList.add("d-none");
+                    document.getElementById("lableManageUser").classList.add("d-none");
+                    document.getElementById("lableManageMenu").classList.remove("d-none");
+                }
+
+                //Manage menu js
+                //modal Add Foods
+                function openAddFoodModal() {
+                    $('#addFoodModal').modal('show');
+                }
+
+                function closeAddFoodModal() {
                     $('#addFoodModal').modal('hide');
-                    location.reload();
-                } else {
-                    console.error('Failed to save food');
-                    alert('Failed to save food.');
                 }
-            })
-            .catch(error => {
-                console.error('Failed to save food', error);
-                alert('Failed to save food.');
-            });
-        }
-        //modal Edit Foods
-        function openEditFoodModal(foodId) {
-            fetch(`/api/foods/${foodId}`)
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('editFoodId').value = data.id;
-                    document.getElementById('editFoodImage').value = data.image;
-                    document.getElementById('editFoodName').value = data.name;
-                    document.getElementById('editFoodDescription').value = data.description;
-                    document.getElementById('editFoodPrice').value = data.price;
-                    document.getElementById('editFoodCategory').value = data.category;
-                    $('#editFoodModal').modal('show');
-                })
-                .catch(error => {
-                    console.error('Failed to get food', error);
-                    alert('Failed to get food.');
-                });
-        }
-        //delete food
-        function deleteFood(foodId) {
-            fetch(`/api/foods/${foodId}`, {
-                method: 'DELETE'
-            })
-            .then(response => {
-                if (response.ok) {
-                    location.reload();
-                } else {
-                    console.error('Failed to delete food');
-                    alert('Failed to delete food.');
-                }
-            })
-            .catch(error => {
-                console.error('Failed to delete food', error);
-                alert('Failed to delete food.');
-            });
-        }
 
+                //new foods
+                function saveNewFood() {
+                    var name = document.getElementById('addFoodName').value;
+                    var description = document.getElementById('addFoodDescription').value;
+                    var price = document.getElementById('addFoodPrice').value;
+                    var category = document.getElementById('addFoodCategory').value;
+                    var image = document.getElementById('addFoodImage').value;
+
+                    fetch(`/api/foods`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            name: name,
+                            description: description,
+                            price: price,
+                            category: category,
+                            image: image
+                        })
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            $('#addFoodModal').modal('hide');
+                            location.reload();
+                        } else {
+                            console.error('Failed to save food');
+                            alert('Failed to save food.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Failed to save food', error);
+                        alert('Failed to save food.');
+                    });
+                }
+
+                //modal Edit Foods
+                function openEditFoodModal(foodId) {
+                    fetch(`/api/foods/${foodId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('editFoodId').value = data.id;
+                        document.getElementById('editFoodImage').value = data.image;
+                        document.getElementById('editFoodName').value = data.name;
+                        document.getElementById('editFoodDescription').value = data.description;
+                        document.getElementById('editFoodPrice').value = data.price;
+                        document.getElementById('editFoodCategory').value = data.category;
+                        $('#editFoodModal').modal('show');
+                    })
+                    .catch(error => {
+                        console.error('Failed to get food', error);
+                        alert('Failed to get food.');
+                    });
+                }
+
+                //delete food
+                function deleteFood(foodId) {
+                    fetch(`/api/foods/${foodId}`, {
+                        method: 'DELETE'
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            location.reload();
+                        } else {
+                            console.error('Failed to delete food');
+                            alert('Failed to delete food.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Failed to delete food', error);
+                        alert('Failed to delete food.');
+                    });
+                }
+
+                //save food
+                function saveEditFood() {
+                    var foodId = document.getElementById('editFoodId').value;
+                    var image = document.getElementById('editFoodImage').value;
+                    var name = document.getElementById('editFoodName').value;
+                    var description = document.getElementById('editFoodDescription').value;
+                    var price = document.getElementById('editFoodPrice').value;
+                    var category = document.getElementById('editFoodCategory').value;
+
+                    fetch(`/api/foods/${foodId}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            id: foodId,
+                            image: image,
+                            name: name,
+                            description: description,
+                            price: price,
+                            category: category
+                        })
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            $('#editFoodModal').modal('hide');
+                            location.reload();
+                        } else {
+                            console.error('Failed to save food');
+                            alert('Failed to save food.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Failed to save food', error);
+                        alert('Failed to save food.');
+                    });
+                }
+
+                //close
+                function closeEditFoodModal() {
+                    $('#editFoodModal').modal('hide');
+                }
     </script>
 }
 
 @functions {
     private List<Users> users = new List<Users>();
+    private List<Foods> foods = new List<Foods>();
     private Users selectedUser = new Users();
-
+    private Foods selectedFood = new Foods();
     //select user Edit Modal
     public async Task EditUser(string userId)
     {
-        selectedUser = await UserServices.GetUserByIdAsync(userId);
-        await JSRuntime.InvokeVoidAsync("openEditModal" , userId);
-        
+        if (userId != null)
+        {
+            selectedUser = await UserServices.GetUserByIdAsync(userId);
+            await JSRuntime.InvokeVoidAsync("openEditModal", userId);
+        } 
+        else
+        {
+            await JSRuntime.InvokeVoidAsync("alert", "Failed to get user.");
+        }
+
     }
 
     // Task delete users
@@ -569,10 +655,27 @@
         users = await UserServices.GetAllUsersAsync();
         await JSRuntime.InvokeVoidAsync("location.reload");
     }
+
+
     //task food edit
-    public async Task EditFood(string foodId)
+    public async Task EditFood(int foodId)
     {
-        selectedUser = await UserServices.GetUserByIdAsync(foodId);
-        await JSRuntime.InvokeVoidAsync("openEditFoodModal", foodId);
+        if (foodId != 0){
+            selectedFood = await FoodsServices.GetFoodByIdAsync(foodId);
+            await JSRuntime.InvokeVoidAsync("openEditFoodModal", foodId);
+        }
+        else
+        {
+            await JSRuntime.InvokeVoidAsync("alert", "Failed to get food.");
+        }
     }
+    //task food delete
+
+    public async Task DeleteFood(int foodId)
+    {
+        await FoodsServices.DeleteFoodAsync(foodId);
+        foods = await FoodsServices.GetAllFoodsAsync();
+        await JSRuntime.InvokeVoidAsync("location.reload");
+    }
+
 }

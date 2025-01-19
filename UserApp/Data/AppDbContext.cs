@@ -15,6 +15,8 @@ namespace Resturant.Data
         }
         public DbSet<Foods> Foods { get; set; }
 
+        public DbSet<Category> Categories { get; set; }
+
     }
 
 

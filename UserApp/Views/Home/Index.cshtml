@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<Resturant.Models.Foods>
 @{
     ViewData["Title"] = "صفحه اصلی";
 }
@@ -28,9 +28,9 @@
       <div class="container">
         <div class="row min-vh-100 aling-items-center">
           <div class="home-text" data-aos="fade-up" data-aos-duration="1000">
-            <h1>رستوران پدیده شاندیز</h1>
-            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است </p>
-            <a href="#our-menu" class="btn btn-default">منو غذاها</a>
+            <h1>Resturant</h1>
+                <p>A restaurant is an establishment that prepares and serves food and drinks to customers</p>
+            <a href="#our-menu" class="btn btn-default">Menu Foods</a>
           </div>
         </div>
       </div>
@@ -41,23 +41,20 @@
     <div class="container">
         <div class="row">
             <div class="section-title">
-                <h2 data-title="داستان ما" data-aos="fade-up">درباه ما</h2>
+                <h2 data-aos="fade-up">About us</h2>
             </div>
         </div>
         <div class="row">
-            <div class="about-text" data-aos="fade-left">
-                <h3>خوش آمدید به رستوران پدیده شاندیر</h3>
+            <div class="about-text text-start" data-aos="fade-left">
+                <h3>Welcome to restaurant</h3>
                 <p>
-                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد
+                    A restaurant is an establishment that prepares and serves food and drinks to customers.Meals are generally served and eaten on the premises, but many restaurants also offer take-out and food delivery services. Restaurants vary greatly in appearance and offerings, including a wide variety of cuisines and service models ranging from inexpensive fast-food restaurants and cafeterias to mid-priced family restaurants, to high-priced luxury establishments.
                 </p>
-                <p>
-                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد
-                </p>
-                <a  asp-controller="Home" asp-action="menuFoods" class="btn btn-default">منو غذاها</a>
+                <a  asp-controller="Home" asp-action="menuFoods" class="btn btn-default">Menu Foods</a>
             </div>
             <div class="about-img" data-aos="fade-right">
                 <div class="img-box">
-                    <h3>20 سال سابقه </h3>
+                    <h3>20 years history </h3>
                     <img src="~/img/about-img.jpg" alt="about img">
                 </div>
             </div>
@@ -70,168 +67,90 @@
     <div class="container">
         <div class="row">
             <div class="section-title">
-                <h2 data-title="اکنون سفارش دهید"  data-aos="fade-up">منو غذا ها</h2>
+                <h2 data-aos="fade-up">Menu Foods</h2>
             </div>
         </div>
         <div class="row">
             <div class="menu-tabs" data-aos="fade-up">
-                <button type="button" class="menu-tab-item active" data-target="#lunch">ناهار</button>
-                <button type="button" class="menu-tab-item" data-target="#dinner">شام</button>
-                <button type="button" class="menu-tab-item" data-target="#drinks">نوشیدنی</button>
-                <button type="button" class="menu-tab-item" data-target="#desserts">دسر</button>
+                <button type="button" class="menu-tab-item active" data-target="#Pizza">Pizza</button>
+                <button type="button" class="menu-tab-item" data-target="#Sandwich">Sandwich</button>
+                <button type="button" class="menu-tab-item" data-target="#Drink">Drink</button>
+                <button type="button" class="menu-tab-item" data-target="#Dessert">Dessert</button>
+                <button type="button" class="menu-tab-item" data-target="#Burger">Burger</button>
+
             </div>
         </div>
-        <div class="row menu-tab-content active" id="lunch">
-            <div class="menu-item" data-aos="fade-up-left">
-                <div class="menu-item-title">
-                    <img src="~/img/menu/1.jpg" alt="menu item">
-                    <h3>آیتم ناهار</h3>
-                </div>
-                <div class="menu-item-price">
-                    40,000 هزار تومان
-                </div>
-            </div>
-            <div class="menu-item" data-aos="fade-up-right">
-                <div class="menu-item-title">
-                    <img src="~/img/menu/2.jpg" alt="menu item">
-                    <h3>آیتم ناهار</h3>
-                </div>
-                <div class="menu-item-price">
-                    40,000 هزار تومان
-                </div>
-            </div>
-            <div class="menu-item" data-aos="fade-up-left">
-                <div class="menu-item-title">
-                    <img src="~/img/menu/3.jpg" alt="menu item">
-                    <h3>آیتم ناهار</h3>
-                </div>
-                <div class="menu-item-price">
-                    40,000 هزار تومان
-                </div>
-            </div>
-            <div class="menu-item" data-aos="fade-up-right">
-                <div class="menu-item-title">
-                    <img src="~/img/menu/4.jpg" alt="menu item">
-                    <h3>آیتم ناهار</h3>
-                </div>
-                <div class="menu-item-price">
-                    40,000 هزار تومان
-                </div>
-            </div>
-            <div class="menu-item" data-aos="fade-up-left">
-                <div class="menu-item-title">
-                    <img src="~/img/menu/5.jpg" alt="menu item">
-                    <h3>آیتم ناهار</h3>
-                </div>
-                <div class="menu-item-price">
-                    40,000 هزار تومان
-                </div>
-            </div>
-            <div class="menu-item" data-aos="fade-up-right">
-                <div class="menu-item-title">
-                    <img src="~/img/menu/6.jpg" alt="menu item">
-                    <h3>آیتم ناهار</h3>
-                </div>
-                <div class="menu-item-price">
-                    40,000 هزار تومان
-                </div>
-            </div>
-            <div class="menu-item" data-aos="fade-up-left">
-                <div class="menu-item-title">
-                    <img src="~/img/menu/7.jpg" alt="menu item">
-                    <h3>آیتم ناهار</h3>
-                </div>
-                <div class="menu-item-price">
-                    40,000 هزار تومان
-                </div>
-            </div>
-            <div class="menu-item" data-aos="fade-up-right">
-                <div class="menu-item-title">
-                    <img src="~/img/menu/8.jpg" alt="menu item">
-                    <h3>آیتم ناهار</h3>
-                </div>
-                <div class="menu-item-price">
-                    40,000 هزار تومان
-                </div>
-            </div>
+
+        <div class="row menu-tab-content active" id="Pizza" >
+        @foreach (var food in Model.Where(f => f.Category =="Pizza").Take(4))
+        {
+                 <div class="menu-item" data-aos="fade-up-left"> 
+                     <div class="menu-item-title"> 
+                         <img src="@food.Image" alt="menu item"> 
+                         <h3>@food.Name</h3> 
+                     </div> 
+                     <div class="menu-item-price"> 
+                         @food.Price $ 
+                     </div> 
+                 </div>
+        }
         </div>
-        <div class="row menu-tab-content" id="dinner">
-            <div class="menu-item" data-aos="fade-up-left">
-                <div class="menu-item-title">
-                    <img src="~/img/menu/1.jpg" alt="menu item">
-                    <h3>آیتم شام</h3>
+
+        <div class="row menu-tab-content" id="Sandwich">
+            @foreach (var food in Model.Where(f => f.Category == "Sandwich").Take(4))
+            {
+                <div class="menu-item" data-aos="fade-up-left">
+                    <div class="menu-item-title">
+                        <img src="@food.Image" alt="menu item">
+                        <h3>@food.Name</h3>
+                    </div>
+                    <div class="menu-item-price">
+                        @food.Price $
+                    </div>
                 </div>
-                <div class="menu-item-price">
-                    30,000 هزار تومان
-                </div>
-            </div>
-            <div class="menu-item" data-aos="fade-up-right">
-                <div class="menu-item-title">
-                    <img src="~/img/menu/2.jpg" alt="menu item">
-                    <h3>آیتم شام</h3>
-                </div>
-                <div class="menu-item-price">
-                    30,000 هزار تومان
-                </div>
-            </div>
-            <div class="menu-item" data-aos="fade-up-left">
-                <div class="menu-item-title">
-                    <img src="~/img/menu/3.jpg" alt="menu item">
-                    <h3>آیتم شام</h3>
-                </div>
-                <div class="menu-item-price">
-                    30,000 هزار تومان
-                </div>
-            </div>
-            <div class="menu-item" data-aos="fade-up-right">
-                <div class="menu-item-title">
-                    <img src="~/img/menu/4.jpg" alt="menu item">
-                    <h3>آیتم شام</h3>
-                </div>
-                <div class="menu-item-price">
-                    30,000 هزار تومان
-                </div>
-            </div>
+            }
         </div>
-        <div class="row menu-tab-content" id="drinks">
-            <div class="menu-item" data-aos="fade-up-left">
-                <div class="menu-item-title">
-                    <img src="~/img/menu/1.jpg" alt="menu item">
-                    <h3>آیتم نوشیدنی</h3>
+        <div class="row menu-tab-content" id="Drink">
+            @foreach (var food in Model.Where(f => f.Category == "Drink").Take(4))
+            {
+                <div class="menu-item" data-aos="fade-up-left">
+                    <div class="menu-item-title">
+                        <img src="@food.Image" alt="menu item">
+                        <h3>@food.Name</h3>
+                    </div>
+                    <div class="menu-item-price">
+                        @food.Price $
+                    </div>
                 </div>
-                <div class="menu-item-price">
-                    20,000 هزار تومان
-                </div>
-            </div>
-            <div class="menu-item" data-aos="fade-up-right">
-                <div class="menu-item-title">
-                    <img src="~/img/menu/2.jpg" alt="menu item">
-                    <h3>آیتم نوشیدنی</h3>
-                </div>
-                <div class="menu-item-price">
-                    20,000 هزار تومان
-                </div>
-            </div>
+            }
         </div>
-        <div class="row menu-tab-content" id="desserts">
-            <div class="menu-item" data-aos="fade-up-left">
-                <div class="menu-item-title">
-                    <img src="~/img/menu/1.jpg" alt="menu item">
-                    <h3>آیتم دسر</h3>
+        <div class="row menu-tab-content" id="Dessert">
+            @foreach (var food in Model.Where(f => f.Category == "Dessert").Take(4))
+            {
+                <div class="menu-item" data-aos="fade-up-left">
+                    <div class="menu-item-title">
+                        <img src="@food.Image" alt="menu item">
+                        <h3>@food.Name</h3>
+                    </div>
+                    <div class="menu-item-price">
+                        @food.Price $
+                    </div>
                 </div>
-                <div class="menu-item-price">
-                    10,000 هزار تومان
+            }
+        </div>
+        <div class="row menu-tab-content" id="Burger">
+            @foreach (var food in Model.Where(f => f.Category == "Burger").Take(4))
+            {
+                <div class="menu-item" data-aos="fade-up-left">
+                    <div class="menu-item-title">
+                        <img src="@food.Image" alt="menu item">
+                        <h3>@food.Name</h3>
+                    </div>
+                    <div class="menu-item-price">
+                        @food.Price $
+                    </div>
                 </div>
-            </div>
-            <div class="menu-item" data-aos="fade-up-right">
-                <div class="menu-item-title">
-                    <img src="~/img/menu/2.jpg" alt="menu item">
-                    <h3>آیتم دسر</h3>
-                </div>
-                <div class="menu-item-price">
-                    10,000 هزار تومان
-                </div>
-            </div>
+            }
         </div>
     </div>
 </section>
@@ -241,29 +160,29 @@
     <div class="container">
         <div class="row">
             <div class="section-title">
-                <h2 data-aos="fade-up" data-title="تیم">سرآشپزهای ما</h2>
+                <h2 data-aos="fade-up" data-title="Team">Our chefs</h2>
             </div>
         </div>
         <div class="row">
             <div class="team-item" data-aos="flip-left" data-aos-duration="1000">
                 <img src="~/img/team/1.jpg" alt="team item">
                 <div class="team-item-info">
-                    <h3>ارشین حمتی</h3>
-                    <p>سر آشپز</p>
+                    <h3>Arshin Hemati</h3>
+                    <p>Chef</p>
                 </div>
             </div>
             <div class="team-item" data-aos="flip-left" data-aos-duration="1000">
                 <img src="~/img/team/2.jpg" alt="team item">
                 <div class="team-item-info">
-                    <h3>پیمان خردمند</h3>
-                    <p>سر آشپز</p>
+                    <h3>Payman Kheradmand</h3>
+                    <p>Chef</p>
                 </div>
             </div>
             <div class="team-item" data-aos="flip-left" data-aos-duration="1000">
                 <img src="~/img/team/3.jpg" alt="team item">
                 <div class="team-item-info">
-                    <h3>سارا رمضانزاده</h3>
-                    <p>سر آشپز</p>
+                    <h3>Sara Ramezan Zade</h3>
+                    <p>Chef</p>
                 </div>
             </div>
         </div>
@@ -273,16 +192,16 @@
     <div class="container">
         <div class="row">
             <div class="footer-item" data-aos="fade-up">
-                <h3>آدرس ما</h3>
-                <p>مشهد , پدیده شاندیز , <br>خیابان ابریشم - پلاک 15</p>
+                <h3>Address</h3>
+                <p>Birjand <br>Moalem Street</p>
             </div>
             <div class="footer-item" data-aos="fade-up">
-                <h3>ساعت کار</h3>
-                <p>شنبه تا جمعه <br> از 10 صبح تا 10 شب</p>
+                <h3>working hours</h3>
+                <p> Saturday to Friday <br>From 10 am to 10 pm</p>
             </div>
             <div class="footer-item" data-aos="fade-up">
-                <h3>راه های ارتباطی</h3>
-                <p>09351234567</p>
+                <h3>Communication</h3>
+                <p>09375986221</p>
                 <p>info@gmail.com</p>
                 <div class="social-links">
                     <a href="#"><i class="fab fa-facebook-f"></i></a>
@@ -294,7 +213,7 @@
         </div>
         <div class="row">
             <div class="copyright">
-                &copy; 2021 - طراحی شده توسط حسین امانی
+                &copy; 2025 - Designed Saeed Choupani
             </div>
         </div>
     </div>

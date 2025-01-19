@@ -12,22 +12,26 @@ namespace Resturant.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly FoodsServices _foodsServices;
+        private readonly AppDbContext _contex;
 
-        public HomeController(ILogger<HomeController> logger, FoodsServices foodsServices)
+        public HomeController(ILogger<HomeController> logger, FoodsServices foodsServices , AppDbContext context)
         {
             _logger = logger;
             _foodsServices = foodsServices;
+            _contex = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var foods = await _foodsServices.GetAllFoodsAsync();
+            return View(foods);
         }
 
         public IActionResult Privacy()
         {
             return View();
         }
+        [Authorize]
         public async Task<IActionResult> DashboardAdmin()
         {
             var foods = await _foodsServices.GetAllFoodsAsync();

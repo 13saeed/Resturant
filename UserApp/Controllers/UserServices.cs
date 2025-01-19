@@ -26,6 +26,10 @@ namespace Resturant.Controllers
         }
         public async Task<Users?> GetUserByIdAsync(string userid)
         {
+            if (userid == null)
+            {
+                return null;
+            }
             return await _userManager.FindByIdAsync(userid);
         }
         public async Task UpdateUserAsync(Users user)

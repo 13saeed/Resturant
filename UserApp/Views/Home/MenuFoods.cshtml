@@ -1,35 +1,76 @@
 ﻿@using Resturant.Data
-@using Resturant.Models
+@using Resturant.Models 
 @model IEnumerable<Resturant.Models.Foods>
 
 @{
     ViewData["Title"] = "منو غذا ";
+   
 }
 <style>
     body, html {
         height: 100%;
         background-color: #393a3b;
     }
+
+    .card-img-top {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+    }
+
+    .card {
+        height: 100%; /* Ensure the card takes full height */
+    }
+
+    .card-body {
+        height: 250px; /* Set a fixed height for the card body */
+        overflow: hidden;/* Hide overflow content */
+        
+    }
+
+    .btn-submit {
+        background-color: #4CAF50; /* Green background */
+        border: none; /* Remove borders */
+        color: white; /* White text */
+        padding: 15px 32px; /* Some padding */
+        text-align: center; /* Centered text */
+        text-decoration: none; /* Remove underline */
+        display: inline-block; /* Make the button inline-block */
+        font-size: 16px; /* Increase font size */
+        margin: 4px 2px; /* Some margin */
+        cursor: pointer; /* Pointer/hand icon */
+        border-radius: 4px; /* Rounded corners */
+        transition-duration: 0.4s; /* 0.4 second transition effect to hover state */
+    }
+
+        .btn-submit:hover {
+            background-color: white; /* White background on hover */
+            color: black; /* Black text on hover */
+            border: 2px solid #4CAF50; /* Green border on hover */
+        }
 </style>
 
 <div class="container my-5">
     <h1 class="text-center mb-4">Restaurant Menu</h1>
-    <div class="row">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
         @foreach (var food in Model)
         {
-            <div class="row row-cols-1 row-cols-md-3 g-4">
-                <div class="col">
-                    <div class="card h-100">
-                        <img src="@food.Image" class="card-img-top" alt="@food.Name">
-                        <div class="card-body ">
-                            <h5 class="card-title">@food.Name</h5>
-                            <p class="card-text">Category:@food.Category</p>
-                            <p class="card-text">@food.Description</p>
-                            <p class="card-text">Price:@food.Price</p>
-                        </div>
+        <div class="col">
+            <div class="card h-100">
+                <img src="@food.Image" class="card-img-top" alt="@food.Name">
+                    <div class="card-body p-3">
+                        <h5 class="card-title text-center fw-bold">@food.Name</h5>
+                            <p class="card-text text-start">Category:@food.Category</p>
+                            <p class="card-text text-start">@food.Description</p>
+                            <p class="card-text text-start">Price:@food.Price</p>
                     </div>
-                </div>
+                    <div class="card-footer">
+                        <button type="button" class="btn btn-submit">Submit</button>
+                    </div>
             </div>
+        </div>
         }
     </div>
 </div>
+
+

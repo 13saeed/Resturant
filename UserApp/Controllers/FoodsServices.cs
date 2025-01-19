@@ -29,8 +29,14 @@ namespace Resturant.Controllers
         }
         public async Task UpdateFoodAsync(Foods food)
         {
-            _context.Foods.Update(food);
-            await _context.SaveChangesAsync();
+
+            var existingFood = await _context.Foods.FindAsync(food.Id);
+            if (existingFood != null)
+            {
+                _context.Entry(existingFood).CurrentValues.SetValues(food);
+                await _context.SaveChangesAsync();
+            }
+            
         }
         public async Task DeleteFoodAsync(int id)
         {
